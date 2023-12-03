@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Remplacement de lettres avec règles d'inversion</title>
+    <style>
+        .container {
+            display: flex;
+            justify-content: space-between;
+            width: 400px;
+            margin: 20px auto;
+        }
+
+        .box {
+            width: 48%;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+    <script>
+        let regles = {
+            'S': '',
+            'R': '',
+            'Y': '',
+            'P': '',
+            'T': '',
+            'E': '',
+            'M': ''
+        };
+
+        function updateRules() {
+            for (let i = 0; i < 7; i++) {
+                const leftLetter = document.getElementById('left' + i).value.toUpperCase();
+                const rightLetter = document.getElementById('right' + i).value.toUpperCase();
+
+                regles[leftLetter] = rightLetter;
+            }
+            console.log(regles);
+        }
+
+        function inverserRemplacement() {
+            const inverseRegles = {};
+            for (const cle in regles) {
+                inverseRegles[regles[cle]] = cle;
+            }
+            regles = inverseRegles;
+
+            console.log(regles);
+        }
+
+        function remplacerLettres() {
+            const mot = document.getElementById('mot').value.toUpperCase();
+            const resultat = mot.replace(/[SRYPTEM]/g, (match) => regles[match]);
+
+            document.getElementById('resultat').innerText = resultat;
+        }
+    </script>
+</head>
+
+<body>
+    <h1>Remplacement de lettres avec règles d'inversion</h1>
+    <div class="container">
+        <div class="box">
+            <h2>Lettres 1</h2>
+            <input type="text" id="left0" maxlength="1" placeholder="">
+            <input type="text" id="left1" maxlength="1" placeholder="">
+            <input type="text" id="left2" maxlength="1" placeholder="">
+            <input type="text" id="left3" maxlength="1" placeholder="">
+            <input type="text" id="left4" maxlength="1" placeholder="">
+            <input type="text" id="left5" maxlength="1" placeholder="">
+            <input type="text" id="left6" maxlength="1" placeholder="">
+        </div>
+        <div class="box">
+            <h2>Lettres 2</h2>
+            <input type="text" id="right0" maxlength="1" placeholder="">
+            <input type="text" id="right1" maxlength="1" placeholder="">
+            <input type="text" id="right2" maxlength="1" placeholder="">
+            <input type="text" id="right3" maxlength="1" placeholder="">
+            <input type="text" id="right4" maxlength="1" placeholder="">
+            <input type="text" id="right5" maxlength="1" placeholder="">
+            <input type="text" id="right6" maxlength="1" placeholder="">
+        </div>
+    </div>
+    <label for="mot">Entrez un mot :</label>
+    <input type="text" id="mot" name="mot">
+    <button onclick="remplacerLettres()">Remplacer</button>
+    <p>Résultat : <span id="resultat"></span></p>
+    <p>Les lettres 1 seront remplacées par les lettres 2. </p>
+    <p>Lorsque vous appuyez sur le bouton pour inverser les règles,
+        les lettres 2 seront remplacées par les lettres 1.</p>
+    <button onclick="updateRules()">Mettre à jour les règles</button>
+    <button onclick="inverserRemplacement()">Inverser les règles</button>
+</body>
+
+</html>
